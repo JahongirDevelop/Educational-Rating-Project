@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import soqqa.com.ratingproject.config.jwt.AuthDto;
 import soqqa.com.ratingproject.config.jwt.JwtResponse;
-import soqqa.com.ratingproject.dto.request.UserCreateDto;
+import soqqa.com.ratingproject.dto.request.UserCreateRequest;
 import soqqa.com.ratingproject.service.UserService;
 
 @RestController
@@ -23,7 +23,7 @@ public class AuthController {
     }
 
     @PostMapping("/sign-up")
-    public String auth(@Valid @RequestBody UserCreateDto dto) {
+    public String auth(@Valid @RequestBody UserCreateRequest dto) {
         return userService.signUp(dto);
     }
 }

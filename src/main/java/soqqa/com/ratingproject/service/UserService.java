@@ -7,21 +7,16 @@ import org.springframework.stereotype.Service;
 import soqqa.com.ratingproject.config.jwt.AuthDto;
 import soqqa.com.ratingproject.config.jwt.JwtResponse;
 import soqqa.com.ratingproject.config.jwt.JwtService;
-import soqqa.com.ratingproject.dto.request.UserCreateDto;
-import soqqa.com.ratingproject.dto.response.UserResponseDTO;
+import soqqa.com.ratingproject.dto.request.UserCreateRequest;
 import soqqa.com.ratingproject.enitity.EducationEntity;
 import soqqa.com.ratingproject.enitity.UserEntity;
 import soqqa.com.ratingproject.enitity.WorkEntity;
-import soqqa.com.ratingproject.enitity.enums.UserRole;
 import soqqa.com.ratingproject.exception.DataNotFoundException;
 import soqqa.com.ratingproject.repository.EducationRepository;
 import soqqa.com.ratingproject.repository.UserRepository;
 import soqqa.com.ratingproject.repository.WorkRepository;
 
-import java.security.Principal;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.UUID;
 
 import static soqqa.com.ratingproject.enitity.enums.UserRole.*;
 
@@ -44,7 +39,7 @@ public class UserService {
         throw new AuthenticationCredentialsNotFoundException("password didn't match");
     }
 
-    public String signUp(UserCreateDto dto) {
+    public String signUp(UserCreateRequest dto) {
         if (userRepository.existsByEmail(dto.getEmail())) {
             throw new IllegalArgumentException("this email is already exists: "+dto.getEmail());
         }
@@ -72,18 +67,18 @@ public class UserService {
 //                .orElseThrow(() -> new DataNotFoundException("User not found!"));;
 //        UserRole role = userEntity.getUserRole();
 //        if (role == ADMIN){
-//            UserResponseDTO adminResponse = modelMapper.map(userEntity,UserResponseDTO.class);
+//            UserResponse adminResponse = modelMapper.map(userEntity,UserResponse.class);
 //            adminResponse.setRole(ADMIN);
 //            return (T) adminResponse;
 //        } else if (role == MODERATOR) {
-//            UserResponseDTO moderatorResponse =  modelMapper.map(userEntity,UserResponseDTO.class);
+//            UserResponse moderatorResponse =  modelMapper.map(userEntity,UserResponse.class);
 //            moderatorResponse.setRole(MODERATOR);
 //            return (T)moderatorResponse;
 //        }
-//        return (T) modelMapper.map(userEntity,UserResponseDTO.class);
+//        return (T) modelMapper.map(userEntity,UserResponse.class);
 //    }
 //
-//    public UserResponseDTO updateProfile(UserCreateDto user, Principal principal) {
+//    public UserResponse updateProfile(UserCreateRequest user, Principal principal) {
 //        UserEntity entity = userRepository.findById(UUID.fromString(principal.getName())).
 //                orElseThrow(() -> new DataNotFoundException("User not found!"));
 //        if(!Objects.equals(user.getName(),null)){
@@ -96,7 +91,7 @@ public class UserService {
 //            entity.setEmail(user.getEmail());
 //        }
 //        UserEntity userEntity = userRepository.save(entity);
-//        return modelMapper.map(userEntity,UserResponseDTO.class);
+//        return modelMapper.map(userEntity,UserResponse.class);
 //    }
 //
 //    public String delete(Principal principal) {
@@ -104,27 +99,27 @@ public class UserService {
 //        return "Deleted!";
 //    }
 //
-//    public UserResponseDTO addModerator(UserCreateDto userCr) {
+//    public UserResponse addModerator(UserCreateRequest userCr) {
 //        existByEmail(userCr);
 //        UserEntity userEntity = modelMapper.map(userCr, UserEntity.class);
 //        userEntity.setUserRole(MODERATOR);
 //        userRepository.save(userEntity);
-//        return modelMapper.map(userEntity, UserResponseDTO.class);
+//        return modelMapper.map(userEntity, UserResponse.class);
 //    }
 //
-    private void existByEmail(UserCreateDto userCr) {
+    private void existByEmail(UserCreateRequest userCr) {
         if (!userRepository.existsByEmail(userCr.getEmail())) {
             throw new DataNotFoundException("User not found");
         }
     }
 //
-//    public UserResponseDTO addAdmin(UserCreateDto userCr) {
+//    public UserResponse addAdmin(UserCreateRequest userCr) {
 //        if (!userRepository.existsByEmail(userCr.getEmail())) {
 //            throw new DataNotFoundException("User not found");
 //        }
 //        UserEntity userEntity = modelMapper.map(userCr, UserEntity.class);
 //        userEntity.setUserRole(ADMIN);
 //        userRepository.save(userEntity);
-//        return modelMapper.map(userEntity, UserResponseDTO.class);
+//        return modelMapper.map(userEntity, UserResponse.class);
 //    }
 }

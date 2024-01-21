@@ -1,8 +1,6 @@
 package soqqa.com.ratingproject.dto.response;
 
 import lombok.*;
-import soqqa.com.ratingproject.enitity.EducationEntity;
-import soqqa.com.ratingproject.enitity.WorkEntity;
 import soqqa.com.ratingproject.enitity.enums.UserRole;
 
 @Getter
@@ -11,7 +9,7 @@ import soqqa.com.ratingproject.enitity.enums.UserRole;
 @NoArgsConstructor
 @Builder
 @ToString
-public class UserResponseDTO {
+public class UserResponse {
     private String name;
     private String surname;
     private String phoneNumber;
