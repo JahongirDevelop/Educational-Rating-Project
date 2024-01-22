@@ -64,10 +64,5 @@ public class EducationService {
         response.setStudents(collect);
          return response;
     }
-    public List<UserResponse> searchByEducationOrWork(String keyWord) {
-        List<UserEntity> userEntities = userRepository.searchAllByEducationNameContainingIgnoreCaseOrWorkNameContainingIgnoreCase(keyWord, keyWord);
-        return userEntities.stream()
-                .map(userEntity -> modelMapper.map(userEntity, UserResponse.class))
-                .collect(Collectors.toList());
-    }
+
 }
