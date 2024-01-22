@@ -1,8 +1,13 @@
 package soqqa.com.ratingproject.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import soqqa.com.ratingproject.dto.request.UserCreateRequest;
+import soqqa.com.ratingproject.dto.response.UserResponse;
 import soqqa.com.ratingproject.service.UserService;
+
+import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor
@@ -10,21 +15,19 @@ import soqqa.com.ratingproject.service.UserService;
 public class UserController {
     private final UserService userService;
 //
-//    @PutMapping("/update")
-//    public ResponseEntity<UserResponse> update(@RequestBody UserCreateRequest userCreateDto, Principal principal){
-//        return ResponseEntity.ok(userService.updateProfile(userCreateDto, principal));
-//    }
-//
-//
-//    @GetMapping("/me")
-//    public ResponseEntity<UserResponse> me(Principal principal){
-//        return ResponseEntity.ok(userService.me(principal));
-//    }
-//
-//    @DeleteMapping("/delete")
-//    public  ResponseEntity<String > delete(Principal principal){
-//        return ResponseEntity.status(200).body(userService.delete(principal));
-//    }
+    @PutMapping("/update")
+    public ResponseEntity<UserResponse> update(@RequestBody UserCreateRequest userCreateDto, Principal principal){
+        return ResponseEntity.ok(userService.updateProfile(userCreateDto, principal));
+    }
+    @GetMapping("/me")
+    public ResponseEntity<UserResponse> me(Principal principal){
+        return ResponseEntity.ok(userService.me(principal));
+    }
+
+    @DeleteMapping("/delete")
+    public  ResponseEntity<String > delete(Principal principal){
+        return ResponseEntity.status(200).body(userService.delete(principal));
+    }
 //
 //    @PreAuthorize("hasRole('SUPER_ADMIN')")
 //    @PostMapping("/create-admin")

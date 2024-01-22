@@ -11,4 +11,5 @@ import java.util.UUID;
 public interface EducationRepository extends JpaRepository<EducationEntity, UUID> {
 
     Optional<EducationEntity> findByName(String education);
+    boolean existsByName(String name);
 }
