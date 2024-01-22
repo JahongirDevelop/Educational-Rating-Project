@@ -25,8 +25,7 @@ public class EducationService {
             throw new DataAlreadyExistsException("Education already exists with this name: " + createRequest.getName());
         }
         EducationEntity education = modelMapper.map(createRequest, EducationEntity.class);
-        List<UserEntity> students = userRepository.findByEducationName(createRequest.getName());
-        education.setStudents(students);
+        educationRepository.save(education);
         return modelMapper.map(createRequest, EducationResponse.class);
     }
 }

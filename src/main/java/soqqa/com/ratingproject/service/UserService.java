@@ -18,6 +18,7 @@ import soqqa.com.ratingproject.repository.EducationRepository;
 import soqqa.com.ratingproject.repository.UserRepository;
 import soqqa.com.ratingproject.repository.WorkRepository;
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -81,6 +82,7 @@ public class UserService {
             userEntity.setWork(workEntity);
         }
         userEntity.setUserRole(USER);
+        userEntity.setCreatedDate(LocalDateTime.now());
         userRepository.save(userEntity);
         return "Successfully sign up";
     }
