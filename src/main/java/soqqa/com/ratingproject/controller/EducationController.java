@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import soqqa.com.ratingproject.dto.request.EducationCreateRequest;
 import soqqa.com.ratingproject.dto.response.EducationResponse;
@@ -20,13 +21,13 @@ import java.util.UUID;
 public class EducationController {
     private final EducationService educationService;
 
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create-education")
     public ResponseEntity<EducationResponse> createEducation(@RequestBody @Valid EducationCreateRequest createRequest){
         return ResponseEntity.status(HttpStatus.CREATED).body(educationService.create(createRequest));
     }
 
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete-education{educationId}")
     public ResponseEntity<String> deleteEducation(@PathVariable UUID educationId){
         return ResponseEntity.status(200).body(educationService.delete(educationId));
@@ -38,13 +39,13 @@ public class EducationController {
         return educationService.getAllEducations();
     }
 
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("get-education/{id}")
     public EducationEntity getEducationById(@PathVariable UUID id) {
         return educationService.getEducation(id);
     }
 
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/get-students-by-education/{education_id}")
     public ResponseEntity<List<UserEntity>> getStudentsByEducation(@PathVariable UUID education_id){
         return ResponseEntity.status(200).body(educationService.getStudentsByEducation(education_id));
