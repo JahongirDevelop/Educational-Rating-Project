@@ -19,4 +19,6 @@ public interface UserRepository extends JpaRepository<UserEntity, UUID> {
     List<UserEntity> findAllByEducation(EducationEntity education);
 
     boolean existsByEmail(String email);
+    List<UserEntity> searchAllByEducationNameContainingIgnoreCaseOrWorkNameContainingIgnoreCase(String education, String work);
+
 }

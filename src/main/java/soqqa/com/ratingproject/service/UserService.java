@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
+
 import static soqqa.com.ratingproject.enitity.enums.UserRole.*;
 
 
@@ -125,6 +127,8 @@ public class UserService {
         return "Deleted!";
     }
 
+
+
 //    public UserResponse addModerator(UserCreateRequest userCr) {
 //        existByEmail(userCr);
 //        UserEntity userEntity = modelMapper.map(userCr, UserEntity.class);
@@ -134,13 +138,20 @@ public class UserService {
 //    }
 
 //
-//    public UserResponse addAdmin(UserCreateRequest userCr) {
-//        if (!userRepository.existsByEmail(userCr.getEmail())) {
-//            throw new DataNotFoundException("User not found");
-//        }
-//        UserEntity userEntity = modelMapper.map(userCr, UserEntity.class);
-//        userEntity.setUserRole(ADMIN);
-//        userRepository.save(userEntity);
-//        return modelMapper.map(userEntity, UserResponse.class);
-//    }
+    public UserResponse addAdmin(UserCreateRequest userCr) {
+        if (!userRepository.existsByEmail(userCr.getEmail())) {
+            throw new DataNotFoundException("User not found");
+        }
+        UserEntity userEntity = modelMapper.map(userCr, UserEntity.class);
+        userEntity.setUserRole(ADMIN);
+        userRepository.save(userEntity);
+        return modelMapper.map(userEntity, UserResponse.class);
+    }
+
+    public List<UserResponse> searchByEducationOrWork(String keyWord) {
+        List<UserEntity> userEntities = userRepository.searchAllByEducationNameContainingIgnoreCaseOrWorkNameContainingIgnoreCase(keyWord, keyWord);
+        return userEntities.stream()
+                .map(userEntity -> modelMapper.map(userEntity, UserResponse.class))
+                .collect(Collectors.toList());
+    }
 }
