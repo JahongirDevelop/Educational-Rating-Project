@@ -1,6 +1,9 @@
 package soqqa.com.ratingproject.dto.response;
 
 import lombok.*;
+import soqqa.com.ratingproject.enitity.UserEntity;
+
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -9,4 +12,5 @@ import lombok.*;
 @Builder
 public class EducationResponse {
     private String name;
+    private List<UserResponse> students;
 }

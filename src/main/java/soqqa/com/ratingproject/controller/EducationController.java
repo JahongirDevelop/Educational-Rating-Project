@@ -4,7 +4,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import soqqa.com.ratingproject.dto.request.EducationCreateRequest;
 import soqqa.com.ratingproject.dto.response.EducationResponse;
@@ -49,6 +48,11 @@ public class EducationController {
     @GetMapping("/get-students-by-education/{education_id}")
     public ResponseEntity<List<UserEntity>> getStudentsByEducation(@PathVariable UUID education_id){
         return ResponseEntity.status(200).body(educationService.getStudentsByEducation(education_id));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<EducationResponse> searchByName(@RequestParam String keyWord) {
+        return ResponseEntity.status(200).body(educationService.searchByName(keyWord));
     }
 
 }

@@ -5,6 +5,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import soqqa.com.ratingproject.dto.request.EducationCreateRequest;
 import soqqa.com.ratingproject.dto.response.EducationResponse;
+import soqqa.com.ratingproject.dto.response.UserResponse;
 import soqqa.com.ratingproject.enitity.EducationEntity;
 import soqqa.com.ratingproject.enitity.UserEntity;
 import soqqa.com.ratingproject.exception.DataAlreadyExistsException;
@@ -14,6 +15,7 @@ import soqqa.com.ratingproject.repository.UserRepository;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -50,5 +52,22 @@ public class EducationService {
     public List<UserEntity> getStudentsByEducation(UUID educationId) {
         EducationEntity education = getEducation(educationId);
         return userRepository.findAllByEducation(education);
+    }
+
+    public EducationResponse searchByName(String keyWord) {
+        EducationEntity educationEntity = educationRepository.searchByNameContainsIgnoreCase(keyWord);
+        EducationResponse response = modelMapper.map(educationEntity, EducationResponse.class);
+        List<UserEntity> allByEducation = userRepository.findAllByEducation(educationEntity);
+        List<UserResponse> collect = allByEducation.stream()
+                .map(userEntity -> modelMapper.map(userEntity, UserResponse.class))
+                .collect(Collectors.toList());
+        response.setStudents(collect);
+         return response;
+    }
+    public List<UserResponse> searchByEducationOrWork(String keyWord) {
+        List<UserEntity> userEntities = userRepository.searchAllByEducationNameContainingIgnoreCaseOrWorkNameContainingIgnoreCase(keyWord, keyWord);
+        return userEntities.stream()
+                .map(userEntity -> modelMapper.map(userEntity, UserResponse.class))
+                .collect(Collectors.toList());
     }
 }
