@@ -6,19 +6,20 @@ import org.springframework.stereotype.Service;
 import soqqa.com.ratingproject.dto.request.EducationCreateRequest;
 import soqqa.com.ratingproject.dto.response.EducationResponse;
 import soqqa.com.ratingproject.enitity.EducationEntity;
-import soqqa.com.ratingproject.enitity.UserEntity;
 import soqqa.com.ratingproject.exception.DataAlreadyExistsException;
+import soqqa.com.ratingproject.exception.DataNotFoundException;
 import soqqa.com.ratingproject.repository.EducationRepository;
 import soqqa.com.ratingproject.repository.UserRepository;
 
 import java.util.List;
+import java.util.UUID;
+
 
 @Service
 @RequiredArgsConstructor
 public class EducationService {
     private final EducationRepository educationRepository;
     private final ModelMapper modelMapper;
-    private final UserRepository userRepository;
 
     public EducationResponse create(EducationCreateRequest createRequest) {
         if (educationRepository.existsByName(createRequest.getName())){
@@ -27,5 +28,20 @@ public class EducationService {
         EducationEntity education = modelMapper.map(createRequest, EducationEntity.class);
         educationRepository.save(education);
         return modelMapper.map(createRequest, EducationResponse.class);
+    }
+
+    public List<EducationEntity> getAllEducations(){
+        return educationRepository.findAll();
+    }
+
+    public String delete(UUID educationId){
+        EducationEntity education = getEducation(educationId);
+        educationRepository.deleteById(education.getId());
+        return "Successfully deleted";
+    }
+
+    public EducationEntity getEducation(UUID educationId){
+        return educationRepository.findById(educationId)
+                .orElseThrow(() -> new DataNotFoundException("Education not found with this id: " + educationId));
     }
 }

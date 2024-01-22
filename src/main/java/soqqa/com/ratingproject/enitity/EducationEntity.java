@@ -1,5 +1,6 @@
 package soqqa.com.ratingproject.enitity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,11 +15,12 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-public class
-EducationEntity extends BaseEntity {
+
+public class EducationEntity extends BaseEntity {
     @Column(unique = true)
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "education", cascade = CascadeType.ALL)
     private List<UserEntity> students;
 }
