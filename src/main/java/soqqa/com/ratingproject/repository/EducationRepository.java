@@ -13,6 +13,6 @@ import java.util.UUID;
 public interface EducationRepository extends JpaRepository<EducationEntity, UUID> {
 
     Optional<EducationEntity> findByName(String education);
-    List<EducationEntity> findAllByStudents(List<UserEntity> students);
     boolean existsByName(String name);
+
 }

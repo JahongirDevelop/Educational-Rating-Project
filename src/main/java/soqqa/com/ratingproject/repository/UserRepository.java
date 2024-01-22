@@ -3,6 +3,7 @@ package soqqa.com.ratingproject.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import soqqa.com.ratingproject.enitity.EducationEntity;
 import soqqa.com.ratingproject.enitity.UserEntity;
 
 
@@ -15,6 +16,7 @@ public interface UserRepository extends JpaRepository<UserEntity, UUID> {
 
     Optional<UserEntity> findByEmail(String email);
     List<UserEntity> findByEducationName(String name);
+    List<UserEntity> findAllByEducation(EducationEntity education);
 
     boolean existsByEmail(String email);
 }

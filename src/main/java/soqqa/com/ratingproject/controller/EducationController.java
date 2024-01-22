@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import soqqa.com.ratingproject.dto.request.EducationCreateRequest;
 import soqqa.com.ratingproject.dto.response.EducationResponse;
 import soqqa.com.ratingproject.enitity.EducationEntity;
+import soqqa.com.ratingproject.enitity.UserEntity;
 import soqqa.com.ratingproject.service.EducationService;
 
 import java.util.List;
@@ -28,13 +29,26 @@ public class EducationController {
 
 //    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete-education{educationId}")
-    public ResponseEntity<String> deleteFloor(@PathVariable UUID educationId){
+    public ResponseEntity<String> deleteEducation(@PathVariable UUID educationId){
         return ResponseEntity.status(200).body(educationService.delete(educationId));
     }
 
-//    @PreAuthorize("hasRole('ADMIN')")
+
     @GetMapping("/all-educations")
     public List<EducationEntity> getAllEducations(){
         return educationService.getAllEducations();
     }
+
+//    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("get-education/{id}")
+    public EducationEntity getEducationById(@PathVariable UUID id) {
+        return educationService.getEducation(id);
+    }
+
+//    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/get-students-by-education/{education_id}")
+    public ResponseEntity<List<UserEntity>> getStudentsByEducation(@PathVariable UUID education_id){
+        return ResponseEntity.status(200).body(educationService.getStudentsByEducation(education_id));
+    }
+
 }

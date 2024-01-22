@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import soqqa.com.ratingproject.dto.request.EducationCreateRequest;
 import soqqa.com.ratingproject.dto.response.EducationResponse;
 import soqqa.com.ratingproject.enitity.EducationEntity;
+import soqqa.com.ratingproject.enitity.UserEntity;
 import soqqa.com.ratingproject.exception.DataAlreadyExistsException;
 import soqqa.com.ratingproject.exception.DataNotFoundException;
 import soqqa.com.ratingproject.repository.EducationRepository;
@@ -19,6 +20,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class EducationService {
     private final EducationRepository educationRepository;
+    private final UserRepository userRepository;
     private final ModelMapper modelMapper;
 
     public EducationResponse create(EducationCreateRequest createRequest) {
@@ -43,5 +45,10 @@ public class EducationService {
     public EducationEntity getEducation(UUID educationId){
         return educationRepository.findById(educationId)
                 .orElseThrow(() -> new DataNotFoundException("Education not found with this id: " + educationId));
+    }
+
+    public List<UserEntity> getStudentsByEducation(UUID educationId) {
+        EducationEntity education = getEducation(educationId);
+        return userRepository.findAllByEducation(education);
     }
 }

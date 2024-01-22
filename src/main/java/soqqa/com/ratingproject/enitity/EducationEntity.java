@@ -15,7 +15,7 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-
+@ToString
 public class EducationEntity extends BaseEntity {
     @Column(unique = true)
     private String name;
