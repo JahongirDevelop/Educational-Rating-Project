@@ -22,6 +22,7 @@ import java.util.UUID;
 public class EducationController {
     private final EducationService educationService;
 
+
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create-education")
     public ResponseEntity<EducationResponse> createEducation(@RequestBody @Valid EducationCreateRequest createRequest){
