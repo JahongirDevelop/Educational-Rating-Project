@@ -41,6 +41,7 @@ public class EducationService {
         List<EducationEntity> educations = educationRepository.findAll();
         educations.sort(Comparator.comparingInt(EducationEntity::getEmployedCount).reversed());
         return educations;
+        //
     }
 
     public String delete(UUID educationId){
