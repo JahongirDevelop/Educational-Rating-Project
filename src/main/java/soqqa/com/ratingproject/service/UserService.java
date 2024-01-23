@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 
 import static soqqa.com.ratingproject.enitity.enums.UserRole.*;
 import static soqqa.com.ratingproject.enitity.enums.UserStatus.EMPLOYED;
+import static soqqa.com.ratingproject.enitity.enums.UserStatus.UNEMPLOYED;
 
 
 @Service
@@ -72,22 +73,22 @@ public class UserService {
             userEntity.setEducation(entity);
         }
 
-
         Optional<WorkEntity> work = workRepository.findByName(dto.getWork());
-        if (work.isPresent()) {
+        if (work.isPresent() && !dto.getWork().isEmpty()) {
             List<UserEntity> employees = work.get().getEmployees();
             employees.add(userEntity);
             work.get().setEmployees(employees);
-
             workRepository.save(work.get());
             userEntity.setWork(work.get());
             userEntity.setUserRole(USER);
 
         } else {
-            WorkEntity workEntity = new WorkEntity();
-            workEntity.setName(dto.getWork());
-            workRepository.save(workEntity);
-            userEntity.setWork(workEntity);
+            if (dto.getStatus() != UNEMPLOYED && !dto.getWork().isEmpty()) {
+                WorkEntity workEntity = new WorkEntity();
+                workEntity.setName(dto.getWork());
+                workRepository.save(workEntity);
+                userEntity.setWork(workEntity);
+            }
         }
         userEntity.setUserRole(USER);
         userEntity.setCreatedDate(LocalDateTime.now());
