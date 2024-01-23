@@ -17,7 +17,8 @@ import java.util.List;
 @RequestMapping("api/v1/user")
 public class UserController {
     private final UserService userService;
-//
+
+
     @PutMapping("/update")
     public ResponseEntity<UserResponse> update(@RequestBody UserCreateRequest userCreateDto, Principal principal){
         return ResponseEntity.ok(userService.updateProfile(userCreateDto, principal));
