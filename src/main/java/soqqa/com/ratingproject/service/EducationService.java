@@ -2,6 +2,7 @@ package soqqa.com.ratingproject.service;
 
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import soqqa.com.ratingproject.dto.request.EducationCreateRequest;
 import soqqa.com.ratingproject.dto.response.EducationResponse;
@@ -13,6 +14,8 @@ import soqqa.com.ratingproject.exception.DataNotFoundException;
 import soqqa.com.ratingproject.repository.EducationRepository;
 import soqqa.com.ratingproject.repository.UserRepository;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -35,7 +38,9 @@ public class EducationService {
     }
 
     public List<EducationEntity> getAllEducations(){
-        return educationRepository.findAll();
+        List<EducationEntity> educations = educationRepository.findAll();
+        educations.sort(Comparator.comparingInt(EducationEntity::getEmployedCount).reversed());
+        return educations;
     }
 
     public String delete(UUID educationId){
