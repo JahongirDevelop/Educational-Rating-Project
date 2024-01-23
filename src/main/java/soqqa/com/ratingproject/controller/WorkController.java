@@ -43,7 +43,7 @@ public class WorkController {
     @GetMapping("get-work/{id}")
     public WorkEntity getWorkById(@PathVariable UUID id) {
         return workService.getWork(id);
-    }//
+    }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/get-students-by-work/{work_id}")
