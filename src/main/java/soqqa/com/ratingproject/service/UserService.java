@@ -13,6 +13,7 @@ import soqqa.com.ratingproject.enitity.EducationEntity;
 import soqqa.com.ratingproject.enitity.UserEntity;
 import soqqa.com.ratingproject.enitity.WorkEntity;
 import soqqa.com.ratingproject.enitity.enums.UserRole;
+import soqqa.com.ratingproject.enitity.enums.UserStatus;
 import soqqa.com.ratingproject.exception.DataNotFoundException;
 import soqqa.com.ratingproject.repository.EducationRepository;
 import soqqa.com.ratingproject.repository.UserRepository;
@@ -26,6 +27,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static soqqa.com.ratingproject.enitity.enums.UserRole.*;
+import static soqqa.com.ratingproject.enitity.enums.UserStatus.EMPLOYED;
 
 
 @Service
@@ -51,12 +53,15 @@ public class UserService {
             throw new IllegalArgumentException("this email is already exists: " + dto.getEmail());
         }
         UserEntity userEntity = modelMapper.map(dto, UserEntity.class);
-
         Optional<EducationEntity> education = educationRepository.findByName(dto.getEducation());
         if (education.isPresent()) {
             List<UserEntity> students = education.get().getStudents();
             students.add(userEntity);
             education.get().setStudents(students);
+
+            userEntity.setStatus(dto.getStatus());
+            if (dto.getStatus() == EMPLOYED) education.get().setEmployedCount(+1);
+
             EducationEntity mapped = modelMapper.map(education, EducationEntity.class);
             educationRepository.save(mapped);
             userEntity.setEducation(mapped);
@@ -66,6 +71,7 @@ public class UserService {
             educationRepository.save(entity);
             userEntity.setEducation(entity);
         }
+
 
         Optional<WorkEntity> work = workRepository.findByName(dto.getWork());
         if (work.isPresent()) {

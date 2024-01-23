@@ -23,4 +23,6 @@ public class EducationEntity extends BaseEntity {
     @JsonIgnore
     @OneToMany(mappedBy = "education", cascade = CascadeType.ALL)
     private List<UserEntity> students;
+
+    private Integer employedCount;
 }
