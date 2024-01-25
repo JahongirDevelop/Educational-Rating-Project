@@ -39,7 +39,7 @@ public class UserService {
     private final WorkRepository workRepository;
     private final JwtService jwtService;
     private final ModelMapper modelMapper;
-    private final EmailSenderService senderService;
+
 
     public JwtResponse signIn(AuthDto dto) {
         UserEntity user = userRepository.findByEmail(dto.getEmail()).orElseThrow(() -> new DataNotFoundException("user not found"));
