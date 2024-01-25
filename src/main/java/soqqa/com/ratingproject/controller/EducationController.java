@@ -12,10 +12,8 @@ import soqqa.com.ratingproject.dto.response.EducationResponse;
 import soqqa.com.ratingproject.enitity.EducationEntity;
 import soqqa.com.ratingproject.enitity.UserEntity;
 import soqqa.com.ratingproject.service.EducationService;
-
 import java.util.List;
 import java.util.UUID;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/education")
