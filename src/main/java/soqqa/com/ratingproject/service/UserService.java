@@ -25,12 +25,9 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
 import static soqqa.com.ratingproject.enitity.enums.UserRole.*;
 import static soqqa.com.ratingproject.enitity.enums.UserStatus.EMPLOYED;
 import static soqqa.com.ratingproject.enitity.enums.UserStatus.UNEMPLOYED;
-
-
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -39,7 +36,6 @@ public class UserService {
     private final WorkRepository workRepository;
     private final JwtService jwtService;
     private final ModelMapper modelMapper;
-
 
     public JwtResponse signIn(AuthDto dto) {
         UserEntity user = userRepository.findByEmail(dto.getEmail()).orElseThrow(() -> new DataNotFoundException("user not found"));
@@ -133,18 +129,6 @@ public class UserService {
         userRepository.deleteById(UUID.fromString(principal.getName()));
         return "Deleted!";
     }
-
-
-
-//    public UserResponse addModerator(UserCreateRequest userCr) {
-//        existByEmail(userCr);
-//        UserEntity userEntity = modelMapper.map(userCr, UserEntity.class);
-//        userEntity.setUserRole(MODERATOR);
-//        userRepository.save(userEntity);
-//        return modelMapper.map(userEntity, UserResponse.class);
-//    }
-
-//
     public UserResponse addAdmin(UserCreateRequest userCr) {
         if (!userRepository.existsByEmail(userCr.getEmail())) {
             throw new DataNotFoundException("User not found");
