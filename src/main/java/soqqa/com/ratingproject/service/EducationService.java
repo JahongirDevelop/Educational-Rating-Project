@@ -44,7 +44,7 @@ public class EducationService {
     public String delete(UUID educationId){
         EducationEntity education = getEducation(educationId);
         educationRepository.deleteById(education.getId());
-        return "Successfully deleted";
+        return "Successfully deleted: " + education.getName();
     }
 
     public EducationEntity getEducation(UUID educationId){
