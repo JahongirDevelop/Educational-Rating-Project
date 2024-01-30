@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import soqqa.com.ratingproject.dto.request.UserCreateRequest;
 import soqqa.com.ratingproject.dto.response.UserResponse;
 import soqqa.com.ratingproject.service.UserService;
-
 import java.security.Principal;
 import java.util.List;
 
@@ -17,7 +16,6 @@ import java.util.List;
 @RequestMapping("api/v1/user")
 public class UserController {
     private final UserService userService;
-
 
     @PutMapping("/update")
     public ResponseEntity<UserResponse> update(@RequestBody UserCreateRequest userCreateDto, Principal principal){
@@ -42,13 +40,5 @@ public class UserController {
     public ResponseEntity<List<UserResponse>> searchByEducationOrWork(@RequestParam String keyWord) {
         return ResponseEntity.status(200).body(userService.searchByEducationOrWork(keyWord));
     }
-
-//
-//    @PreAuthorize("hasRole('ADMIN')")
-//    @PostMapping("/create-moderator")
-//    public ResponseEntity<UserResponse> createModerator(@RequestBody @Valid UserCreateRequest userCr) {
-//        return ResponseEntity.ok(userService.addModerator(userCr));
-//    }
-
 
 }

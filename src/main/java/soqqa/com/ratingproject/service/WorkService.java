@@ -12,11 +12,9 @@ import soqqa.com.ratingproject.exception.DataAlreadyExistsException;
 import soqqa.com.ratingproject.exception.DataNotFoundException;
 import soqqa.com.ratingproject.repository.UserRepository;
 import soqqa.com.ratingproject.repository.WorkRepository;
-
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
 @Service
 @RequiredArgsConstructor
 public class WorkService {
